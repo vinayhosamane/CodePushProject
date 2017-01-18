@@ -9,6 +9,9 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Alert,
+  TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -18,10 +21,44 @@ export default class AwesomeProject extends Component {
 
 componentDidMount()
 {
-  codePush.sync({updateDialog: true , installMode: codePush.InstallMode.IMMEDIATE});
+  var updateDialogOptions = {
+          updateTitle: "You have an update",
+          optionalUpdateMessage: "Update available for your React-Native app. Install?",
+          optionalIgnoreButtonLabel: "Nope",
+          optionalInstallButtonLabel: "Yup",
+      };
+
+    var onError = function (error) {
+    console.log("An error occurred. " + error);
+};
+
+var onDownloadProgress = function (downloadProgress) {
+    if (downloadProgress) {
+        console.log("Downloading " + downloadProgress.receivedBytes + " of " + downloadProgress);
+    }
+};
+
+  codePush.sync({updateDialog: updateDialogOptions , installMode: codePush.InstallMode.IMMEDIATE},onDownloadProgress);
+}
+
+onDeleteClick()
+{
+  Alert.alert(
+         'Alert OK',
+         'Alert on OK Press.',
+         [
+           {text: 'No', onPress: () => console.log('Cancel Pressed!')},
+           {text: 'Yes', onPress: () =>
+           {
+             console.log('OK Pressed!')
+           }
+         }
+       ]
+     );
 }
 
   render() {
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -34,6 +71,21 @@ componentDidMount()
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
+        <Text style={styles.instructions}>
+          Adding another line of textview in index.ios.js
+        </Text>
+        <Text style={styles.instructions}>
+          Testing codePush for team
+        </Text>
+        <TouchableOpacity onPress={()=>{
+               //Share.open(shareOptions);
+               this.onDeleteClick();
+          }}>
+          <Text style={styles.instructions}>
+          {"\n"}
+          OK
+          </Text>
+         </TouchableOpacity>
       </View>
     );
   }
