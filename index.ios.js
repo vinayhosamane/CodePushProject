@@ -77,6 +77,9 @@ onDeleteClick()
         <Text style={styles.instructions}>
           Testing codePush for team
         </Text>
+        <Text style={styles.instructions}>
+          Integrated CI/CD for this Project using Microsoft Azure Mobile Center.
+        </Text>
         <TouchableOpacity onPress={()=>{
                //Share.open(shareOptions);
                this.onDeleteClick();
